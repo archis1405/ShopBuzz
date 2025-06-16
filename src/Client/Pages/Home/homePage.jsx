@@ -1,5 +1,6 @@
 import React from 'react';
 import HomeSlider from '../../Components/Home/homeSlider';
+import HomeSectionSlider from '../../Components/HomeSectionSlider/HomeSectionSlider.jsx';
 
 const HomePage = () => {
     return (
@@ -7,7 +8,7 @@ const HomePage = () => {
             <HomeSlider />
 
             <div>
-                Sections
+                <HomeSectionSlider />
             </div>
         </div>
     )
