@@ -4,7 +4,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import HomeProductCard from "../SectionCard/HomeProductCard.jsx";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { Button } from "@mui/material";
-import {mens_kurta} from "../../Data/mens_kurta.js";
+import {mens_kurta} from "../../Data/Mens_kurta.js";
 
 const HomeSectionSlider = () => {
   const [activeIndex, setActiveIndex] = useState(0);
