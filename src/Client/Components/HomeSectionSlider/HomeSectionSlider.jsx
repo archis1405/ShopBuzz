@@ -4,9 +4,9 @@ import "react-alice-carousel/lib/alice-carousel.css";
 import HomeProductCard from "../SectionCard/HomeProductCard.jsx";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { Button } from "@mui/material";
-import {mens_kurta} from "../../Data/Mens_kurta.js";
 
-const HomeSectionSlider = () => {
+
+const HomeSectionSlider = ({data,sectionName}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef(null);
 
@@ -26,7 +26,7 @@ const HomeSectionSlider = () => {
 
   const syncActiveIndex = ({ item }) => setActiveIndex(item);
 
-  const items = mens_kurta.slice(0, 10).map((item, index) => (
+  const items = data.slice(0, 10).map((item, index) => (
     <HomeProductCard key={index} product={item} />
   ));
 
@@ -41,7 +41,8 @@ const HomeSectionSlider = () => {
   const isLastSlide = activeIndex >= items.length - itemsPerView;
 
   return (
-    <div>
+    <div className="border ">
+        <h2 className="text-2xl font-extrabold text-gray-800 py-5 text-left">{sectionName}</h2>
       <div className="relative p-5">
         <AliceCarousel
           ref={carouselRef}
@@ -53,7 +54,7 @@ const HomeSectionSlider = () => {
           activeIndex={activeIndex}
         />
         
-        {/* Next Button */}
+        
         {!isLastSlide && (
           <Button
             variant="contained"
@@ -77,7 +78,7 @@ const HomeSectionSlider = () => {
           </Button>
         )}
 
-        {/* Previous Button */}
+        
         {!isFirstSlide && (
           <Button
             variant="contained"

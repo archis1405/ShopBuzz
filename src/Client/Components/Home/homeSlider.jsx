@@ -7,7 +7,8 @@ const HomeSlider = () => {
     const items = homeSliderData.map((item, index) => (
         <div key={index} className="slider-item">
             <img 
-                className='cursor-pointer' 
+                className='cursor-pointer -z-10' 
+                
                 role='presentation' 
                 src={item.image} 
                 alt={item.title} 
