@@ -7,6 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { useLocation , useNavigate } from 'react-router-dom';
 
 import { useState } from 'react'
 import {
@@ -38,6 +39,60 @@ function classNames(...classes) {
 
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleFilter = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+
+    let filterValue = searchParams.get(sectionId)?.split(",") || [];
+
+    if (filterValue.includes(value)) {
+      filterValue = filterValue.filter((item) => item !== value);
+    } else {
+      filterValue.push(value);
+    }
+
+    if (filterValue.length > 0) {
+      searchParams.set(sectionId, filterValue.join(","));
+    } else {
+      searchParams.delete(sectionId);
+    }
+
+    navigate({
+      pathname: location.pathname,
+      search: `?${searchParams.toString()}`
+    });
+  };
+
+  // New handler for radio button filters (single selection)
+  const handleRadioFilter = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+
+    if (value) {
+      searchParams.set(sectionId, value);
+    } else {
+      searchParams.delete(sectionId);
+    }
+
+    navigate({
+      pathname: location.pathname,
+      search: `?${searchParams.toString()}`
+    });
+  };
+
+  // Helper function to get current filter values from URL
+  const getFilterValue = (sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+    return searchParams.get(sectionId) || "";
+  };
+
+  // Helper function to check if checkbox should be checked
+  const isCheckboxChecked = (value, sectionId) => {
+    const searchParams = new URLSearchParams(location.search);
+    const filterValues = searchParams.get(sectionId)?.split(",") || [];
+    return filterValues.includes(value);
+  };
 
   return (
     <div className="bg-white">
@@ -93,6 +148,8 @@ export default function Product() {
                                 <div className="flex h-5 shrink-0 items-center">
                                   <div className="group grid size-4 grid-cols-1">
                                     <input
+                                      onChange={() => handleFilter(option.value, section.id)}
+                                      checked={isCheckboxChecked(option.value, section.id)}
                                       defaultValue={option.value}
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
@@ -155,47 +212,23 @@ export default function Product() {
                         </h3>
                         <DisclosurePanel className="pt-6">
                           <div className="space-y-6">
-                            {section.options.map((option, optionIdx) => (
-                              <div key={option.value} className="flex gap-3">
-                                <div className="flex h-5 shrink-0 items-center">
-                                  <div className="group grid size-4 grid-cols-1">
-                                    <input
-                                      defaultValue={option.value}
-                                      id={`filter-mobile-${section.id}-${optionIdx}`}
-                                      name={`${section.id}[]`}
-                                      type="checkbox"
-                                      className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
-                                    />
-                                    <svg
-                                      fill="none"
-                                      viewBox="0 0 14 14"
-                                      className="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25"
-                                    >
-                                      <path
-                                        d="M3 8L6 11L11 3.5"
-                                        strokeWidth={2}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="opacity-0 group-has-[:checked]:opacity-100"
-                                      />
-                                      <path
-                                        d="M3 7H11"
-                                        strokeWidth={2}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className="opacity-0 group-has-[:indeterminate]:opacity-100"
-                                      />
-                                    </svg>
-                                  </div>
-                                </div>
-                                <label
-                                  htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                  className="min-w-0 flex-1 text-gray-500"
-                                >
-                                  {option.label}
-                                </label>
-                              </div>
-                            ))}
+                            <FormControl>
+                              <RadioGroup
+                                aria-labelledby={`radio-buttons-group-label-mobile-${section.id}`}
+                                value={getFilterValue(section.id)}
+                                name={`filter-mobile-${section.id}`}
+                                onChange={(event) => handleRadioFilter(event.target.value, section.id)}
+                              >
+                                {section.options.map((option, optionIdx) => (
+                                  <FormControlLabel 
+                                    key={option.value} 
+                                    value={option.value} 
+                                    control={<Radio />} 
+                                    label={option.label} 
+                                  />
+                                ))}
+                              </RadioGroup>
+                            </FormControl>
                           </div>
                         </DisclosurePanel>
                       </>
@@ -298,8 +331,9 @@ export default function Product() {
                                 <div className="flex h-5 shrink-0 items-center">
                                   <div className="group grid size-4 grid-cols-1">
                                     <input
+                                      onChange={() => handleFilter(option.value, section.id)}
+                                      checked={isCheckboxChecked(option.value, section.id)}
                                       defaultValue={option.value}
-                                      defaultChecked={option.checked}
                                       id={`filter-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
                                       type="checkbox"
@@ -363,8 +397,9 @@ export default function Product() {
                             <FormControl>
                             <RadioGroup
                               aria-labelledby={`radio-buttons-group-label-${section.id}`}
-                              defaultValue=""
+                              value={getFilterValue(section.id)}
                               name={`filter-${section.id}`}
+                              onChange={(event) => handleRadioFilter(event.target.value, section.id)}
                             >
                               {section.options.map((option, optionIdx) => (
                                 <FormControlLabel 
