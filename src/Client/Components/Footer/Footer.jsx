@@ -104,7 +104,7 @@ const Footer = () => {
                         </Button>
                     </div>
                 </Grid>
-                <Grid className='pt-20' item xs={12}>
+                <Grid className='pt-20 align-center' item xs={12}>
                     <Typography 
                         variant="body2"
                         sx={{

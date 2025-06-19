@@ -4,6 +4,7 @@ import NavigationBar from './Client/Components/NavigationBar/navigationBar';
 import HomePage from './Client/Pages/Home/homePage';
 import Footer from './Client/Components/Footer/Footer';
 import Product from './Client/Components/Product/Product';
+import ProductDetails from './Client/Components/ProductDetails/ProductDetails';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
      <NavigationBar />
        <div>
         {/* <HomePage /> */}
-        <Product />
+        {/* <Product /> */}
+        <ProductDetails />
        </div>
          <Footer />
     </div>
