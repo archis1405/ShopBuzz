@@ -1,9 +1,11 @@
 "use client";
 
+import { Grid } from "@mui/material";
 import { useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { Button, Rating } from "@mui/material";
+import ProductReviewCard from "./ProductReviewCard";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -77,7 +79,7 @@ export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white lg:px-20">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
           <ol
@@ -231,9 +233,11 @@ export default function ProductDetails() {
                   </fieldset>
                 </div>
 
-                <Button variant="contained" color="secondary " sx={{ px:"2rem" , py:"1rem"  }}>
-                  Add to Cart
-                </Button>
+                <div className="flex justify-center mt-10">
+                  <Button variant="contained" sx={{ px:"2rem" , py:"1rem"  , bgcolor:"#9155fd"}}>
+                    Add to Cart
+                  </Button>
+                </div>
               </form>
             </div>
 
@@ -274,6 +278,28 @@ export default function ProductDetails() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Ratings and Reviews */}
+        
+        <section>
+            <h1 className="font-semibold text-lg pb-4">Recent Reviews and Ratings</h1>
+            <div className="border p-5">
+                <Grid container spacing={7}>
+                    <Grid item xs={7}>
+                        <div className="space-y-5">
+                            {[1,1,1].map((item) => <ProductReviewCard />)}
+                        </div>
+                    </Grid>
+                    <Grid item xs={5}>
+                        <h1 className="text-xl font-semibold pb-1">Product Ratings</h1>
+                        <div>
+                            <Rating value={4.2} precision={0.1} readOnly />
+                            <p className="opacity-55">38732 Ratings</p>
+                        </div>   
+                    </Grid>
+                </Grid>
+            </div>
         </section>
       </div>
     </div>
