@@ -1,11 +1,7 @@
-"use client";
-
-import { Grid } from "@mui/material";
-import { useState } from "react";
-import { StarIcon } from "@heroicons/react/20/solid";
+import React, { useState } from 'react';
+import { Grid, Box, LinearProgress, Button, Rating } from "@mui/material";
 import { Radio, RadioGroup } from "@headlessui/react";
-import { Button, Rating } from "@mui/material";
-import ProductReviewCard from "./ProductReviewCard";
+import ProductReviewCard from './ProductReviewCard';
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -51,12 +47,10 @@ const product = {
     },
   ],
   sizes: [
-    
     { name: "S", inStock: true },
     { name: "M", inStock: true },
     { name: "L", inStock: true },
     { name: "XL", inStock: true },
-    
   ],
   description:
     'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
@@ -69,7 +63,17 @@ const product = {
   details:
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
-const reviews = { href: "#", average: 4, totalCount: 117 };
+
+const reviews = { href: "#", average: 4.3, totalCount: 42807 };
+
+// Rating breakdown data
+const ratingBreakdown = [
+  { label: "Excellent", percentage: 45, count: 19259, color: "success" },
+  { label: "Very Good", percentage: 30, count: 12842, color: "success" },
+  { label: "Good", percentage: 15, count: 6421, color: "warning" },
+  { label: "Average", percentage: 7, count: 2996, color: "warning" },
+  { label: "Poor", percentage: 3, count: 1284, color: "error" },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -120,12 +124,10 @@ export default function ProductDetails() {
           </ol>
         </nav>
 
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10  px-4 pt-10">
-          
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 px-4 pt-10">
           {/* Image gallery */}
-
           <div className="flex flex-col item-center">
-            <div classname='overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]'>
+            <div className='overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]'>
                 <img
                     alt={product.images[0].alt}
                     src={product.images[0].src}
@@ -133,22 +135,21 @@ export default function ProductDetails() {
                 />
             </div>
             <div className="flex flex-wrap justify-center space-x-5">
-                {product.images.map((item) =>  <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
+                {product.images.map((item, index) => (
+                  <div key={index} className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
                     <img
                         src={item.src}
                         alt={item.alt}
                         className="col-start-2 aspect-3/2 size-full rounded-lg object-cover max-lg:hidden"
                     />
-                </div> )}
+                  </div>
+                ))}
             </div>
-            
           </div>
 
           {/* Product info */}
-
-          <div className="lg:col-span-1 maxt-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl 
-          lg:px-8 lg:pb-24">
-            <div className="lg:col-span-2 ">
+          <div className="lg:col-span-1 maxt-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24">
+            <div className="lg:col-span-2">
               <h1 className="text-lg font-semibold lg:text-xl text-gray-900">
                 BRAND
               </h1>
@@ -169,8 +170,7 @@ export default function ProductDetails() {
                 <div className="flex items-center space-x-3">
                     <Rating name='read-only' value={3.5} readOnly precision={0.5}/>
                     <p className="opacity-50 text-sm">36489 Ratings</p>
-                    <p className="ml-3 text-indigo-700 font-medium hover:text-indigo-500 
-                    opacity-50 text-sm">873 Reviews</p>
+                    <p className="ml-3 text-indigo-700 font-medium hover:text-indigo-500 opacity-50 text-sm">873 Reviews</p>
                 </div>
               </div>
 
@@ -179,7 +179,6 @@ export default function ProductDetails() {
                 <div className="mt-10">
                   <div className="flex items-center justify-between">
                     <h3 className="text-sm font-medium text-gray-900">Size</h3>
-                     
                   </div>
 
                   <fieldset aria-label="Choose a size" className="mt-4">
@@ -234,7 +233,7 @@ export default function ProductDetails() {
                 </div>
 
                 <div className="flex justify-center mt-10">
-                  <Button variant="contained" sx={{ px:"2rem" , py:"1rem"  , bgcolor:"#9155fd"}}>
+                  <Button variant="contained" sx={{ px:"2rem" , py:"1rem", bgcolor:"#9155fd"}}>
                     Add to Cart
                   </Button>
                 </div>
@@ -245,7 +244,6 @@ export default function ProductDetails() {
               {/* Description and details */}
               <div>
                 <h3 className="sr-only">Description</h3>
-
                 <div className="space-y-6">
                   <p className="text-base text-gray-900">
                     {product.description}
@@ -257,7 +255,6 @@ export default function ProductDetails() {
                 <h3 className="text-sm font-medium text-gray-900">
                   Highlights
                 </h3>
-
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
                     {product.highlights.map((highlight) => (
@@ -271,7 +268,6 @@ export default function ProductDetails() {
 
               <div className="mt-10">
                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
                 <div className="mt-4 space-y-6">
                   <p className="text-sm text-gray-600">{product.details}</p>
                 </div>
@@ -280,26 +276,86 @@ export default function ProductDetails() {
           </div>
         </section>
 
-        {/* Ratings and Reviews */}
-        
-        <section>
-            <h1 className="font-semibold text-lg pb-4">Recent Reviews and Ratings</h1>
-            <div className="border p-5">
-                <Grid container spacing={7}>
-                    <Grid item xs={7}>
-                        <div className="space-y-5">
-                            {[1,1,1].map((item) => <ProductReviewCard />)}
-                        </div>
-                    </Grid>
-                    <Grid item xs={5}>
-                        <h1 className="text-xl font-semibold pb-1">Product Ratings</h1>
-                        <div>
-                            <Rating value={4.2} precision={0.1} readOnly />
-                            <p className="opacity-55">38732 Ratings</p>
-                        </div>   
-                    </Grid>
-                </Grid>
-            </div>
+        {/* Enhanced Ratings and Reviews Section */}
+        <section className="px-4 pb-16">
+          <h1 className="font-semibold text-lg pb-4">Recent Reviews and Ratings</h1>
+          <div className="border p-5">
+            <Grid container columnSpacing={2} justifyContent="space-between">
+              <Grid item xs={12} md={5}>
+                <div className="space-y-5">
+                  {[1,1,1].map((item)=> <ProductReviewCard />)}
+                </div>
+              </Grid>
+              
+              <Grid item xs={12} md={6}>
+                {/* Enhanced Product Ratings Section */}
+                <div className="text-center mb-6">
+                  <h1 className="text-3xl font-bold text-gray-800 mb-3">Product Ratings</h1>
+                  
+                  {/* Overall Rating Display */}
+                  <div className="flex justify-center items-center space-x-2 mb-4">
+                    <Rating 
+                      value={reviews.average} 
+                      precision={0.1} 
+                      readOnly 
+                      size="large"
+                      sx={{
+                        '& .MuiRating-iconFilled': {
+                          color: '#FFD700',
+                        },
+                        '& .MuiRating-iconEmpty': {
+                          color: '#E0E0E0',
+                        }
+                      }}
+                    />
+                    <span className="text-3xl font-bold text-gray-800">{reviews.average}</span>
+                  </div>
+                  
+                  <p className="text-gray-500 text-xl font-medium">
+                    {reviews.totalCount.toLocaleString()} Ratings
+                  </p>
+                </div>
+
+                {/* Rating Breakdown */}
+                <div className="space-y-3">
+                  {ratingBreakdown.map((rating, index) => (
+                    <Box key={index} className="flex items-center space-x-3">
+                      {/* Rating Label */}
+                      <div className="w-20 text-left">
+                        <span className="text-sm font-medium text-gray-700">
+                          {rating.label}
+                        </span>
+                      </div>
+                      
+                      {/* Progress Bar */}
+                      <div className="flex-1">
+                        <LinearProgress
+                          variant="determinate"
+                          value={rating.percentage}
+                          color={rating.color}
+                          sx={{
+                            height: 10,
+                            borderRadius: 2,
+                            backgroundColor: '#f0f0f0',
+                            '& .MuiLinearProgress-bar': {
+                              borderRadius: 4,
+                            }
+                          }}
+                        />
+                      </div>
+                      
+                      {/* Count */}
+                      <div className="w-16 text-right">
+                        <span className="text-sm text-gray-500">
+                          {rating.count.toLocaleString()}
+                        </span>
+                      </div>
+                    </Box>
+                  ))}
+                </div>
+              </Grid>
+            </Grid>
+          </div>
         </section>
       </div>
     </div>
