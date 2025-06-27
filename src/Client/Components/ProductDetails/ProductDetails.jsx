@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Grid, Box, LinearProgress, Button, Rating } from "@mui/material";
 import { Radio, RadioGroup } from "@headlessui/react";
 import ProductReviewCard from './ProductReviewCard';
+import { mens_kurta } from '../../Data/Mens_kurta';
+import ProductCard from '../Product/ProductCard';
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -328,21 +330,22 @@ export default function ProductDetails() {
                       </div>
                       
                       {/* Progress Bar */}
-                      <div className="flex-1">
+                    <Box sx={{ width: '220px' }}>
                         <LinearProgress
-                          variant="determinate"
-                          value={rating.percentage}
-                          color={rating.color}
-                          sx={{
+                            variant="determinate"
+                            value={rating.percentage}
+                            color={rating.color}
+                            sx={{
                             height: 10,
                             borderRadius: 2,
                             backgroundColor: '#f0f0f0',
                             '& .MuiLinearProgress-bar': {
-                              borderRadius: 4,
+                                borderRadius: 4,
                             }
-                          }}
+                            }}
                         />
-                      </div>
+                    </Box>
+
                       
                       {/* Count */}
                       <div className="w-16 text-right">
@@ -356,6 +359,19 @@ export default function ProductDetails() {
               </Grid>
             </Grid>
           </div>
+        </section>
+
+        {/* Similar Products Section */}
+        <section className='pt-10'>
+            <h1 className='font-bold py-5 text-xl'>Similar Products</h1>
+
+            <div className="flex flex-wrap wid">
+                  {mens_kurta.map((item, index) => (
+                    <div key={index} className="w-1/5 p-2">
+                    <ProductCard product={item} />
+                    </div>
+                  ))}
+            </div>
         </section>
       </div>
     </div>
