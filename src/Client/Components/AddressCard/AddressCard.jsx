@@ -2,7 +2,16 @@ import React from "react";
 
 const AddressCard = () => {
     return(
-        <h1>AddressCard</h1> 
+        <div>
+            <div className="space-y-3">
+                <p className="font-bold">Raam Kapoor</p>
+                <p>Mumbai, gokul dham market, 40001</p>
+                <div className="space-y-1">
+                    <p className="font-semibold">Phone Number</p>
+                    <p>9167459820</p>
+                </div>
+            </div>
+        </div>
     )
 }
 
